@@ -1,5 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include 'db.php';
+include 'header.php';
+?>
+<main>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,3 +56,4 @@
     </footer>
 </body>
 </html>
+</main>
