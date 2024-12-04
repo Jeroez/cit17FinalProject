@@ -166,3 +166,64 @@ form button:hover {
         padding: 1rem;
     }
 }
+/* Dashboard */
+.dashboard {
+    padding: 2rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.user-profile {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.user-profile .profile-img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+}
+
+.appointment {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.reservations {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.reservations ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reservations ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.reservations ul li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
