@@ -7,36 +7,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
     $csrfToken = $_POST['csrf_token'] ?? '';
 
+    // CSRF Token validation
     if (empty($csrfToken) || $csrfToken !== ($_SESSION['csrf_token'] ?? '')) {
         die('Invalid CSRF token.');
     }
 
+    // Basic validation
     if (empty($email) || empty($password)) {
-        die('Email and Password are required.');
+        $_SESSION['error'] = 'Email and password are required.';
+        header('Location: login.php');
+        exit();
     }
 
-    $query = $pdo->prepare("SELECT user_id, email, password FROM users WHERE email = :email LIMIT 1");
-    $query->bindParam(':email', $email);
-    $query->execute();
-    $user = $query->fetch(PDO::FETCH_ASSOC);
+    // Authenticate user
+    try {
+        $query = $pdo->prepare("SELECT user_id, full_name, email, password, role FROM users WHERE email = :email LIMIT 1");
+        $query->bindParam(':email', $email);
+        $query->execute();
+        $user = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && password_verify($password, $user['password'])) {
-        if ($user['email'] === 'admin@example.com') { 
+        // Verify user exists and password is correct
+        if ($user && password_verify($password, $user['password'])) {
+            // Set session variables
             $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['is_admin'] = true; 
-            header('Location: admindashboard.php');
+            $_SESSION['role'] = $user['role'];
+
+            // Redirect based on role
+            if ($user['role'] === 'admin') {
+                header('Location: adminDashboard.php');
+            } else {
+                header('Location: userdashboard.php');
+            }
+            exit();
+        } else {
+            $_SESSION['error'] = 'Invalid email or password.';
+            header('Location: login.php');
             exit();
         }
-
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['is_admin'] = false;
-        header('Location: dashboard.php');
+    } catch (PDOException $e) {
+        $_SESSION['error'] = 'An error occurred. Please try again.';
+        header('Location: login.php');
         exit();
-    } else {
-        die('Invalid email or password.');
     }
 } else {
     die('Invalid request method.');
 }
+?>
