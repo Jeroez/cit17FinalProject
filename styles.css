@@ -339,3 +339,47 @@ header {
     gap: 2rem;
     margin: 2rem;
 }
+/* Admin Dashboard */
+.admin-dashboard {
+    padding: 2rem;
+}
+
+.dashboard-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+    color: #2a2a72;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.user-table th,
+.user-table td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-table th {
+    background-color: #2a2a72;
+    color: white;
+}
+
+.user-table tr:hover {
+    background-color: #f9f9f9;
+}

@@ -11,6 +11,7 @@
         <nav>
             <a href="index.php">Home</a>
             <a href="classes.php">Classes</a>
-            <a href="login.php">Login</a>
+             <a href="dashboard.php">Dashboard</a>
+            <a href="logout.php">logout</a>
         </nav>
     </header>

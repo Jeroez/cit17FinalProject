@@ -1,8 +1,41 @@
 <?php
 include 'db.php';
 include 'header.php';
+session_start();
+
+// Handle the form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check user credentials
+    $query = $pdo->prepare("SELECT * FROM users WHERE email = :email AND password = MD5(:password)");
+    $query->bindParam(':email', $email);
+    $query->bindParam(':password', $password);
+    $query->execute();
+
+    $user = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        // Store user information in session
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['role'] = $user['role'];
+
+        // Redirect based on role
+        if ($user['role'] === 'admin') {
+            header("Location: admindashboard.php");
+        } else {
+            header("Location: dashboard.php");
+        }
+        exit();
+    } else {
+        $error = "Invalid email or password!";
+    }
+}
 ?>
-<main>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +50,13 @@ include 'header.php';
     </section>
 
     <!-- Login Form -->
-    <form>
+    <form method="POST" action="">
         <h2>Login</h2>
+        <?php
+        if (isset($error)) {
+            echo "<p style='color: red;'>$error</p>";
+        }
+        ?>
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
@@ -28,13 +66,12 @@ include 'header.php';
         <button type="submit">Log In</button>
 
         <p><a href="#">Forgot Password?</a></p>
-        <p>Don't have an account? <a href="#">Sign Up</a></p>
+        <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
     </form>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
+        <?php include 'footer.php'; ?>
     </footer>
 </body>
 </html>
-</main>
