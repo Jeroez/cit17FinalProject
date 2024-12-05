@@ -3,10 +3,8 @@ include 'db.php';
 include 'headerlogin.php';
 session_start();
 
-// Mock user ID (replace this with actual session user ID logic)
 $userId = 1;
 
-// Fetch user details
 $userQuery = $pdo->prepare("SELECT full_name, email FROM users WHERE user_id = :user_id");
 $userQuery->bindParam(':user_id', $userId);
 $userQuery->execute();
@@ -28,7 +26,6 @@ $bookings = $bookingsQuery->fetchAll(PDO::FETCH_ASSOC);
 <main>
     <section class="dashboard">
         <div class="dashboard-grid">
-            <!-- User Profile Section -->
             <div class="user-profile">
                 <img src="https://via.placeholder.com/150" alt="User Profile" class="profile-img">
                 <h3><?= htmlspecialchars($user['full_name']) ?></h3>

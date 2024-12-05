@@ -21,31 +21,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Authenticate user
     try {
-        $query = $pdo->prepare("SELECT user_id, full_name, email, password, role FROM users WHERE email = :email LIMIT 1");
+        $query = $pdo->prepare("
+            SELECT user_id, full_name, email, password, created_at, role
+            FROM users
+            WHERE email = :email
+            LIMIT 1
+        ");
         $query->bindParam(':email', $email);
         $query->execute();
         $user = $query->fetch(PDO::FETCH_ASSOC);
 
-        // Verify user exists and password is correct
-        if ($user && password_verify($password, $user['password'])) {
-            // Set session variables
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['full_name'] = $user['full_name'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = $user['role'];
-
-            // Redirect based on role
-            if ($user['role'] === 'admin') {
-                header('Location: adminDashboard.php');
-            } else {
-                header('Location: userdashboard.php');
-            }
-            exit();
-        } else {
-            $_SESSION['error'] = 'Invalid email or password.';
-            header('Location: login.php');
-            exit();
+        // Debugging output
+        if (!$user) {
+            die('User not found for email: ' . htmlspecialchars($email));
         }
+
+        if (!password_verify($password, $user['password'])) {
+            die('Password does not match for email: ' . htmlspecialchars($email));
+        }
+
+        // Success: Set session variables
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['full_name'] = $user['full_name'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['created_at'] = $user['created_at'];
+        $_SESSION['role'] = $user['role'];
+
+        // Redirect based on role
+        if ($user['role'] === 'admin') {
+            header('Location: admindashboard.php');
+        } else {
+            header('Location: dashboard.php');
+        }
+        exit();
     } catch (PDOException $e) {
         $_SESSION['error'] = 'An error occurred. Please try again.';
         header('Location: login.php');
@@ -54,4 +62,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     die('Invalid request method.');
 }
-?>
