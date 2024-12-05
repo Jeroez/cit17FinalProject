@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'anime_art_booking';
 $username = 'root';
-$password = ''; // Leave empty for XAMPP default
+$password = ''; 
 
 
 try {

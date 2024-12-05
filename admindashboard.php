@@ -3,13 +3,12 @@ include 'db.php';
 include 'headerlogin.php';
 session_start();
 
-// Check if the user is an admin
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit();
 }
 
-// Fetch data
 $userCount = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 $classCount = $pdo->query("SELECT COUNT(*) FROM classes")->fetchColumn();
 $bookingCount = $pdo->query("SELECT COUNT(*) FROM bookings")->fetchColumn();

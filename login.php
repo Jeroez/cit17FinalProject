@@ -3,14 +3,12 @@ session_start();
 include 'db.php';
 include 'header.php';
 
-// Generate CSRF Token
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Display any error messages
 $error = $_SESSION['error'] ?? null;
-unset($_SESSION['error']); // Clear the error message after displaying
+unset($_SESSION['error']); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +36,6 @@ unset($_SESSION['error']); // Clear the error message after displaying
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-            <!-- CSRF Token -->
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
             <button type="submit">Log In</button>
