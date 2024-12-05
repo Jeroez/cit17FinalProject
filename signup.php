@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Insert the user into the database
         try {
-            $query = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)");
-            $query->bindParam(':name', $full_name);
+            $query = $pdo->prepare("INSERT INTO users (full_name, email, password, role) VALUES (:full_name, :email, :password, :role)");
+            $query->bindParam(':full_name', $full_name);
             $query->bindParam(':email', $email);
             $query->bindParam(':password', $password);
             $query->bindParam(':role', $role);
