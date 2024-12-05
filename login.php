@@ -1,14 +1,11 @@
 <?php
 include 'db.php';
-include 'header.php';
 session_start();
 
-// Handle the form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Check user credentials
     $query = $pdo->prepare("SELECT * FROM users WHERE email = :email AND password = MD5(:password)");
     $query->bindParam(':email', $email);
     $query->bindParam(':password', $password);
@@ -17,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $query->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        // Store user information in session
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role'] = $user['role'];
 
@@ -29,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         exit();
     } else {
-        $error = "Invalid email or password!";
+        echo "Invalid credentials!";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

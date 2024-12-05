@@ -5,14 +5,14 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the input values
-    $name = trim($_POST['name']);
+    $full_name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm-password'];
-    $role = 'user'; // Default role
+    $role = 'user';
 
     // Validate input
-    if (strlen($name) < 3) {
+    if (strlen($full_name) < 3) {
         $error = "Full Name must be at least 3 characters long.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format.";
