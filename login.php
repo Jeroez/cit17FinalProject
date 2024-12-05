@@ -10,15 +10,6 @@ include 'header.php';
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
-
     <!-- Hero Section -->
     <section class="hero">
         <h1>Welcome Back!</h1>
