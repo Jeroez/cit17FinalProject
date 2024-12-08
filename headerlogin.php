@@ -10,7 +10,7 @@
     <header>
         <nav>
             <a href="index.php">Home</a>
-            <a href="classes.php">Classes</a>
+            <a href="classes_login.php">Classes</a>
              <a href="dashboard.php">Dashboard</a>
             <a href="logout.php">logout</a>
         </nav>
