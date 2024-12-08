@@ -1,14 +1,12 @@
 <?php
-session_start(); // Start the session to access user data
+session_start(); 
 include 'db.php';
-include 'header.php';
+include 'headerlogin.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate and sanitize input
     $classId = filter_input(INPUT_POST, 'class_id', FILTER_VALIDATE_INT);
     $bookingDate = filter_input(INPUT_POST, 'booking_date', FILTER_SANITIZE_STRING);
 
-    // Retrieve user_id from session
     if (!isset($_SESSION['user_id'])) {
         die("User not logged in. Please log in to book a class.");
     }
@@ -18,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Invalid input.");
     }
 
-    // Check if the class exists
     $query = $pdo->prepare("SELECT * FROM classes WHERE class_id = :class_id");
     $query->bindParam(':class_id', $classId);
     $query->execute();
@@ -28,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Class not found.");
     }
 
-    // Insert booking into the database
     $insertQuery = $pdo->prepare("
         INSERT INTO bookings (class_id, user_id, booking_date, created_at) 
         VALUES (:class_id, :user_id, :booking_date, NOW())
@@ -47,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<main><p>Failed to confirm your booking. Please try again.</p></main>";
     }
 } else {
-    // Redirect to a safe page if the script is accessed directly
     header("Location: index.php");
     exit;
 }

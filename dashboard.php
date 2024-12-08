@@ -3,13 +3,17 @@ include 'db.php';
 include 'headerlogin.php';
 session_start();
 
-$userId = 1;
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$userId = $_SESSION['user_id'];
 
 $userQuery = $pdo->prepare("SELECT full_name, email FROM users WHERE user_id = :user_id");
 $userQuery->bindParam(':user_id', $userId);
 $userQuery->execute();
 $user = $userQuery->fetch(PDO::FETCH_ASSOC);
-
 
 $bookingsQuery = $pdo->prepare("
     SELECT b.booking_date, c.class_name, c.description

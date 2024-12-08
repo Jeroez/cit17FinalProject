@@ -9,9 +9,7 @@
 <body>
     <header>
         <nav>
-            <a href="homelogin.php">Home</a>
-            <a href="classes_login.php">Classes</a>
-             <a href="dashboard.php">Dashboard</a>
+             <a href="admindashboard.php">Dashboard</a>
             <a href="logout.php">logout</a>
         </nav>
     </header>

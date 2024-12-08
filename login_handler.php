@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (!password_verify($password, $user['password'])) {
-            die('Password does not match for email: ' . htmlspecialchars(string: $email));
+            die('Password does not match for email: ' . htmlspecialchars($email));
         }
 
         $_SESSION['user_id'] = $user['user_id'];
@@ -41,8 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['email'] = $user['email'];
         $_SESSION['created_at'] = $user['created_at'];
         $_SESSION['role'] = $user['role'];
-        $_SESSION['user_id'] = $loggedInUserId;
-
 
         if ($user['role'] === 'admin') {
             header('Location: admindashboard.php');
@@ -55,6 +53,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: login.php');
         exit();
     }
-} else {
-    die('Invalid request method.');
 }
