@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($password) < 6) {
         $error = "Password must be at least 6 characters long.";
     } else {
-        // Hash the password
+     
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         try {
-            // Insert user into the database with hashed password
+            
             $query = $pdo->prepare("INSERT INTO users (full_name, email, password, role) VALUES (:full_name, :email, :password, :role)");
             $query->bindParam(':full_name', $full_name);
             $query->bindParam(':email', $email);
@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query->bindParam(':role', $role);
             $query->execute();
 
-            // Save session variables and redirect
             $user_id = $pdo->lastInsertId();
             $_SESSION['user_id'] = $user_id;
             $_SESSION['name'] = $full_name;
